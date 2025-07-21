@@ -1,5 +1,5 @@
 🚀 How to Run
-# Clone the repo or unzip this project
+****# Clone the repo or unzip this project****
 cd json_temporal_project
 
 # Create and activate Python virtual environment
