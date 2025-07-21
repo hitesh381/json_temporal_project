@@ -85,7 +85,7 @@ You should see pretty-printed output like:
 ## 🧪 Run Unit Tests
 
 ```bash
-pytest tests/
+PYTHONPATH=. pytest tests/
 ```
 
 ---
