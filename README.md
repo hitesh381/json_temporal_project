@@ -86,6 +86,19 @@ You should see pretty-printed output like:
 
 ```bash
 PYTHONPATH=. pytest tests/
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+=============================================================================== test session starts ===============================================================================
+platform linux -- Python 3.8.10, pytest-8.3.5, pluggy-1.5.0
+rootdir: /root/json_temporal_project
+plugins: asyncio-0.24.0
+asyncio: mode=strict, default_loop_scope=None
+collected 2 items                                                                                                                                                                 
+
+tests/test_json_workflow.py ..                                                                                                                                              [100%]
+
+================================================================================ 2 passed in 0.10s ================================================================================
 ```
 
 ---
