@@ -1,4 +1,4 @@
-# 🛠️ JSON Pretty Printer using Temporal (Jabali DevOps Exam)
+# 🛠️ JSON Pretty Printer using Temporal
 
 This project is a Python-based [Temporal](https://temporal.io) workflow that pretty-prints a JSON document passed via the CLI. It uses Temporal's local development setup with Docker Compose and is tested end-to-end.
 
