@@ -42,16 +42,6 @@ services:
     networks:
       - temporal-net
 
-  worker:
-    build: .
-    container_name: json-worker
-    depends_on:
-      - temporal
-    networks:
-      - temporal-net
-    volumes:
-      - .:/app
-
 networks:
   temporal-net:
     driver: bridge
