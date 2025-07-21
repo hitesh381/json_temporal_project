@@ -1,78 +1,146 @@
-# JSON Temporal Project
+# 🛠️ JSON Pretty Printer using Temporal (Jabali DevOps Exam)
 
-A Python project demonstrating Temporal workflow orchestration for JSON data processing.
+This project is a Python-based [Temporal](https://temporal.io) workflow that pretty-prints a JSON document passed via the CLI. It uses Temporal's local development setup with Docker Compose and is tested end-to-end.
 
-## Prerequisites
+---
 
-- Python 3.7+
-- Docker
-- Git
+## 📂 Features
 
-## How to Run 🚀
+- ✅ Temporal workflow in Python using `temporalio`
+- ✅ CLI-based interface to pretty print JSON
+- ✅ Temporal worker runs locally
+- ✅ Temporal server + UI run via Docker Compose
+- ✅ Clean project structure with unit tests
 
-### 1. Clone the Repository
+---
+
+## 🚀 Quick Start
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/hitesh381/json_temporal_project.git
 cd json_temporal_project
 ```
 
-### 2. Create and Activate Python Virtual Environment
+---
+
+### 2️⃣ Setup Python Environment
 
 ```bash
 python3 -m venv env
-source env/bin/activate  # On Windows: env\Scripts\activate
+source env/bin/activate
+pip install -r requirements.txt
 ```
 
-### 3. Install Dependencies
+---
+
+### 3️⃣ Start Temporal Server and UI
 
 ```bash
-pip install temporalio pytest pytest-asyncio
+docker-compose up -d
 ```
 
-### 4. Start Temporal Server in Docker
+- Temporal gRPC: `localhost:7233`
+- Web UI: [http://localhost:8080](http://localhost:8080)
 
-Open a new terminal and run:
+---
+
+### 4️⃣ Start the Temporal Worker (from host)
 
 ```bash
-docker run --rm -d -p 7233:7233 --name temporal temporalio/auto-setup
+python worker_runner.py
 ```
 
-### 5. Run the Main Application
+You should see:
+```bash
+🚀 Worker started on 'json-task-queue'...
+```
+
+---
+
+### 5️⃣ Run the Main CLI to Trigger Workflow
 
 ```bash
-python main.py
+python main.py sample.json
 ```
 
-## 🧪 Running Unit Tests
+You should see pretty-printed output like:
+
+```✅ Pretty Printed JSON:
+ [
+    {
+        "age": 30,
+        "name": "Alice"
+    },
+    {
+        "age": 25,
+        "name": "Bob"
+    }
+]
+```
+
+---
+
+## 🧪 Run Unit Tests
 
 ```bash
 pytest tests/
 ```
 
+---
+
 ## 🧰 Project Structure
 
-```
+```bash
 json_temporal_project/
-├── main.py                    # CLI runner
-├── sample.json               # Input JSON data
+├── main.py                 # CLI runner that starts the workflow
+├── worker_runner.py        # Starts Temporal worker on task queue
 ├── workflows/
-│   └── json_workflow.py      # Temporal workflow definition
+│   └── json_workflow.py    # Workflow definition
+├── sample.json             # Sample JSON input (list of dicts)
 ├── tests/
-│   └── test_json_workflow.py # Unit tests
-└── README.md                 # Project documentation
+│   └── test_json_workflow.py  # Unit tests
+├── requirements.txt        # Python dependencies
+├── Dockerfile              # (Optional) For containerizing worker
+└── docker-compose.yml      # Starts Temporal server + UI
 ```
 
-## Features
+---
 
-- Temporal workflow orchestration
-- JSON data processing
-- Unit testing with pytest
-- Docker-based Temporal server setup
+## 🌐 Temporal UI
 
-## Technologies Used
+You can observe the workflow state via the UI at:  
+🔗 [http://localhost:8080](http://localhost:8080)
 
-- **Temporal**: Workflow orchestration
-- **Python**: Core programming language
-- **Docker**: Containerized Temporal server
-- **Pytest**: Testing framework
+Look for:
+- Namespace: `default`
+- Workflow Type: `JsonWorkflow`
+- Status: Running / Completed / Failed
+
+---
+
+## ✅ Summary
+
+| Component         | Method             | Location         |
+|------------------|--------------------|------------------|
+| Temporal Server   | Docker Compose     | `localhost:7233` |
+| Temporal UI       | Docker Compose     | `localhost:8080` |
+| Worker            | Python script      | `worker_runner.py` |
+| CLI client        | Python script      | `main.py`        |
+
+---
+
+## 📌 Notes
+
+- You can extend this by Dockerizing the worker too.
+- The current setup allows fast dev iteration from host.
+- Compatible with Mac, Linux, WSL.
+
+---
+
+## 💡 Future Enhancements (Optional)
+
+- Add a Dockerized CLI/worker for full Compose-based orchestration
+- Add Helm or KIND manifests for Kubernetes deployment
+- CI/CD with GitHub Actions
