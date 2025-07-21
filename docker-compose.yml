@@ -1,23 +1,56 @@
-version: "3.3"
+version: '3.3'
 
 services:
   temporal:
-    image: temporalio/auto-setup:latest
+    image: temporalio/auto-setup:1.22.3
     container_name: temporal
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgres
+      - TEMPORAL_WEB_ENABLED=true
+    depends_on:
+      - postgres
     ports:
       - "7233:7233"
+    networks:
+      - temporal-net
+
+  postgres:
+    image: postgres:13
+    container_name: temporal-postgres
+    environment:
+      POSTGRES_PASSWORD: temporal
+      POSTGRES_USER: temporal
+      POSTGRES_DB: temporal
+    ports:
+      - "5432:5432"
     networks:
       - temporal-net
 
   temporal-ui:
     image: temporalio/ui:latest
     container_name: temporal-ui
+    environment:
+      - TEMPORAL_GRPC_ENDPOINT=temporal:7233
     depends_on:
       - temporal
     ports:
       - "8080:8080"
     networks:
       - temporal-net
+
+  worker:
+    build: .
+    container_name: json-worker
+    depends_on:
+      - temporal
+    networks:
+      - temporal-net
+    volumes:
+      - .:/app
 
 networks:
   temporal-net:
