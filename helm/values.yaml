@@ -1,0 +1,12 @@
+api:
+  image: hitesh381/json-api:latest
+
+worker:
+  image: hitesh381/json-temporal-app:latest
+
+temporal:
+  address: temporal-frontend.temporal.svc.cluster.local:7233
+
+ingress:
+  host: pretty-json.example.com
+  tlsSecret: pretty-json-tls
